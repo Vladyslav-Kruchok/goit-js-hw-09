@@ -1,7 +1,8 @@
 /**
- * @param1 obj1 = set attribute true => obj1.disabled
- * @param2 obj2 = set attribute false => obj2.enabled
+ * @param1 obj1 = set attribute true
+ * @param2 obj2 = set attribute false
  * @return void
+ * @description obj1.disabled and obj2.enabled
  */
 export function switcher(obj1, obj2)
 {
