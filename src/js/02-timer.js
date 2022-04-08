@@ -24,18 +24,20 @@ const options = {
     onClose(selectedDates)
     {
         let selectedDate = selectedDates[0];
-        const currentDate = options.defaultDate; 
+        const currentDate = new Date(); 
         
         if (selectedDate < currentDate)
         {
-            window.alert('Please choose a date in the future');
+            window.alert(`Please choose a date in the future, current date is ${new Date().toString()}`);
             return;
         }
 
         ref.startBtn.disabled = false;
         ref.startBtn.addEventListener('click', e =>
         {
+            const timer = new StartTimer({show: showUi}, ref);
             ref.startBtn.disabled = true;
+            ref.inputDatePickr.disabled = true;
             timer.start(flatpickr.compareDates(selectedDate, currentDate, false));
         });
     },
@@ -44,6 +46,5 @@ const options = {
 
 //#region Main #
 ref.startBtn.disabled = true;
-const timer = new StartTimer({show: showUi}, ref);
 flatpickr(ref.idDatePickr, options);
 //#endregion #
