@@ -1,6 +1,12 @@
 /*
-Напиши скрипт таймера, який здійснює зворотний відлік до певної дати.
++Напиши скрипт таймера, який здійснює зворотний відлік до певної дати.
 Такий таймер може використовуватися у блогах та інтернет-магазинах, сторінках реєстрації подій, під час технічного обслуговування тощо.
++Використовуй бібліотеку flatpickr для того, щоб дозволити користувачеві кросбраузерно вибрати кінцеву дату і час в одному елементі інтерфейсу. 
++Метод onClose() з об'єкта параметрів викликається щоразу під час закриття елемента інтерфейсу, який створює flatpickr. Саме у ньому варто обробляти дату, обрану користувачем. 
++Натисканням на кнопку «Start» скрипт повинен обчислювати раз на секунду, скільки часу залишилось до вказаної дати, і оновлювати інтерфейс таймера, показуючи чотири цифри: дні, години, хвилини і секунди у форматі xx:xx:xx:xx.
++Для підрахунку значень використовуй готову функцію convertMs, де ms - різниця між кінцевою і поточною датою в мілісекундах.
++Якщо таймер запущений, для того щоб вибрати нову дату і перезапустити його - необхідно перезавантажити сторінку.
++Для відображення повідомлень користувачеві, замість window.alert(), використовуй бібліотеку notiflix.
 */
 //#region Import #
 import flatpickr from 'flatpickr';
@@ -8,7 +14,8 @@ import 'flatpickr/dist/flatpickr.min.css';
 import { Ukrainian } from 'flatpickr/dist/l10n/uk';
 import { showUi } from './helpers/ShowUi';
 import { ref } from './helpers/Ref';
-import { StartTimer } from './class/StartTimer'
+import { StartTimer } from './class/StartTimer';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 //#endregion #
 
 //#region Setup #
@@ -28,7 +35,7 @@ const options = {
         
         if (selectedDate < currentDate)
         {
-            window.alert(`Please choose a date in the future, current date is ${new Date().toString()}`);
+            Notify.failure(`Please choose a date in the future, current date is ${new Date().toString()}`);
             return;
         }
 
